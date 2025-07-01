@@ -14,14 +14,15 @@ public class InsertElementAtDifferentPositions {
     
     // Add at first
     public void addFirst(String data) {
-        Node newNode = new Node(data);
-        if (head == null) {
-            head = newNode;
+        Node newNode = new Node(data);  // Create a new node with given data
+        if (head == null) {             // If the list is empty
+            head = newNode;             // Set head to new node
             return;
         }
-        newNode.next = head;
-        head = newNode;
+        newNode.next = head;            // Link the new node to the current head
+        head = newNode;                 // Update head to be the new node
     }
+
 
 
     // Add at last

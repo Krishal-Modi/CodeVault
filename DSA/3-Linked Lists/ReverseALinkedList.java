@@ -87,5 +87,4 @@
         list.reverseIterate();
         list.printList();
     }
-    
 }
