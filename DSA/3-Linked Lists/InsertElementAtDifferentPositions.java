@@ -32,11 +32,11 @@ public class InsertElementAtDifferentPositions {
             head = newNode;
             return;
         }
-        Node current = head;
-        while (current.next != null) {
-            current = current.next;
+        Node current = head;  // Start from the head
+        while (current.next != null) { // going to the last node
+            current = current.next; // Move to the next node
         }
-        current.next = newNode;
+        current.next = newNode; // Link the last node to the new node
     }
 
 
