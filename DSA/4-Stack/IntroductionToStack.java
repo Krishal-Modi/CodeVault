@@ -34,7 +34,7 @@
         The top of the stack is the most recently added element that has not yet been removed.
         It is used to access the last element added to the stack without modifying the stack itself.
         This is useful for checking the current state of the stack or for decision-making based on the top element.
-
+        If Stack is empty then top has value 0
         
             
 */
