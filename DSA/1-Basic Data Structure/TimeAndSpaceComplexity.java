@@ -14,7 +14,7 @@
         - time depends on size of input
 
         - We always consider the worst case scenario when analyzing time complexity. 
-        because time will never go above that, thatswhy we always talk about Big O (Worst case)
+        because time will never go above that, thats why we always talk about Big O (Worst case)
 
             Time complexity Comparision
 

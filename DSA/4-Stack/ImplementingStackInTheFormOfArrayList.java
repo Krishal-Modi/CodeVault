@@ -9,9 +9,9 @@ public class ImplementingStackInTheFormOfArrayList {
         }
 
         public int pop(){
-            int top = list.get(list.size() - 1);
-            list.remove(list.size() - 1);
-            return top;
+            int top = list.get(list.size() - 1); // Get the top element
+            list.remove(list.size() - 1); // Remove the top element
+            return top; // Return the top element
         }
 
         public int peek(){
