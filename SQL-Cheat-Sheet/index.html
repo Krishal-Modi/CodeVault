@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTU SQL Complete Cheat Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+            /*-webkit-background-clip: text;*/
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .sql-section {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-definition {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: normal;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .query-item {
+            margin-bottom: 15px;
+            border-left: 4px solid #3a7bd5;
+            padding-left: 15px;
+            background: rgba(58, 123, 213, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .query-name {
+            font-weight: 600;
+            color: #3a7bd5;
+            margin-bottom: 8px;
+        }
+
+        .query-code {
+            background: #f8f9fa;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border-left: 3px solid #3a7bd5;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .query-code:hover {
+            background-color: #e9ecef;
+        }
+
+        .query-code.highlighted {
+            background-color: #e2f0fd;
+        }
+
+        .query-code .keyword { color: #d63384; font-weight: bold; }
+        .query-code .string { color: #20c997; }
+        .query-code .number { color: #fd7e14; }
+        .query-code .comment { color: #6c757d; font-style: italic; }
+
+        .query-desc {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-header h1 { font-size: 2rem; }
+            .section-title { flex-direction: column; align-items: flex-start; }
+            .section-definition { margin-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-header">
+            <h1>GTU SQL Complete Cheat Sheet</h1>
+            <p>Computer Engineering - Quick Revision Guide</p>
+        </div>
+
+        <!-- DATABASE OPERATIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Database Operations
+                <span class="section-definition">Commands to create, manage, and delete databases</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Database</div>
+                    <div class="query-code"><span class="keyword">CREATE DATABASE</span> database_name;</div>
+                    <div class="query-desc">Creates a new database</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Use Database</div>
+                    <div class="query-code"><span class="keyword">USE</span> database_name;</div>
+                    <div class="query-desc">Selects the database to work with</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Show Databases</div>
+                    <div class="query-code"><span class="keyword">SHOW DATABASES</span>;</div>
+                    <div class="query-desc">Lists all available databases</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Database</div>
+                    <div class="query-code"><span class="keyword">DROP DATABASE</span> database_name;</div>
+                    <div class="query-desc">Permanently deletes a database</div>
+                    <div class="tip-box">Warning: This action cannot be undone!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE OPERATIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Table Operations
+                <span class="section-definition">Commands to create, modify, and manage database tables</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Table</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    student_id <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    name <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>,
+    age <span class="keyword">INT</span>,
+    grade <span class="keyword">CHAR</span>(<span class="number">1</span>),
+    join_date <span class="keyword">DATE</span>
+);</div>
+                    <div class="query-desc">Creates a new table with specified columns</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Show Tables</div>
+                    <div class="query-code"><span class="keyword">SHOW TABLES</span>;</div>
+                    <div class="query-desc">Lists all tables in current database</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Describe Table</div>
+                    <div class="query-code"><span class="keyword">DESCRIBE</span> table_name;</div>
+                    <div class="query-desc">Shows the structure of a table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Alter Table (Add Column)</div>
+                    <div class="query-code"><span class="keyword">ALTER TABLE</span> students
+<span class="keyword">ADD COLUMN</span> email <span class="keyword">VARCHAR</span>(<span class="number">100</span>);</div>
+                    <div class="query-desc">Adds a new column to existing table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Alter Table (Modify Column)</div>
+                    <div class="query-code"><span class="keyword">ALTER TABLE</span> students
+<span class="keyword">MODIFY COLUMN</span> name <span class="keyword">VARCHAR</span>(<span class="number">100</span>);</div>
+                    <div class="query-desc">Changes column definition</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Alter Table (Drop Column)</div>
+                    <div class="query-code"><span class="keyword">ALTER TABLE</span> students
+<span class="keyword">DROP COLUMN</span> email;</div>
+                    <div class="query-desc">Removes a column from table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Rename Table</div>
+                    <div class="query-code"><span class="keyword">ALTER TABLE</span> old_name
+<span class="keyword">RENAME TO</span> new_name;</div>
+                    <div class="query-desc">Changes the name of a table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Table</div>
+                    <div class="query-code"><span class="keyword">DROP TABLE</span> table_name;</div>
+                    <div class="query-desc">Permanently deletes a table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Truncate Table</div>
+                    <div class="query-code"><span class="keyword">TRUNCATE TABLE</span> table_name;</div>
+                    <div class="query-desc">Removes all data but keeps table structure</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA MANIPULATION -->
+        <div class="sql-section">
+            <div class="section-title">
+                Data Manipulation
+                <span class="section-definition">Commands to insert, update, and delete data in tables</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Insert Single Record</div>
+                    <div class="query-code"><span class="keyword">INSERT INTO</span> students (name, age, grade)
+<span class="keyword">VALUES</span> (<span class="string">'Rahul'</span>, <span class="number">20</span>, <span class="string">'A'</span>);</div>
+                    <div class="query-desc">Adds a single row to the table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Insert Multiple Records</div>
+                    <div class="query-code"><span class="keyword">INSERT INTO</span> students (name, age, grade)
+<span class="keyword">VALUES</span> 
+    (<span class="string">'Priya'</span>, <span class="number">21</span>, <span class="string">'B'</span>),
+    (<span class="string">'Amit'</span>, <span class="number">19</span>, <span class="string">'A'</span>),
+    (<span class="string">'Neha'</span>, <span class="number">20</span>, <span class="string">'C'</span>);</div>
+                    <div class="query-desc">Adds multiple rows in single query</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Insert From Select</div>
+                    <div class="query-code"><span class="keyword">INSERT INTO</span> top_students (name, grade)
+<span class="keyword">SELECT</span> name, grade <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade = <span class="string">'A'</span>;</div>
+                    <div class="query-desc">Inserts data from another table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Update Records</div>
+                    <div class="query-code"><span class="keyword">UPDATE</span> students
+<span class="keyword">SET</span> grade = <span class="string">'A+'</span>
+<span class="keyword">WHERE</span> student_id = <span class="number">101</span>;</div>
+                    <div class="query-desc">Modifies existing data</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Update Multiple Columns</div>
+                    <div class="query-code"><span class="keyword">UPDATE</span> students
+<span class="keyword">SET</span> grade = <span class="string">'A+'</span>, age = age + <span class="number">1</span>
+<span class="keyword">WHERE</span> student_id = <span class="number">101</span>;</div>
+                    <div class="query-desc">Updates multiple fields at once</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Delete Records</div>
+                    <div class="query-code"><span class="keyword">DELETE FROM</span> students
+<span class="keyword">WHERE</span> age > <span class="number">25</span>;</div>
+                    <div class="query-desc">Removes specific rows</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BASIC QUERIES -->
+        <div class="sql-section">
+            <div class="section-title">
+                Basic Queries
+                <span class="section-definition">Fundamental SELECT statements to retrieve data</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Select All Columns</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Retrieves all columns from table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Select Specific Columns</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name, grade <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Retrieves only specified columns</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Where Clause</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade = <span class="string">'A'</span>;</div>
+                    <div class="query-desc">Filters rows based on condition</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Distinct Values</div>
+                    <div class="query-code"><span class="keyword">SELECT DISTINCT</span> grade <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Returns unique values only</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Order By (Ascending)</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">ORDER BY</span> name;</div>
+                    <div class="query-desc">Sorts results in ascending order</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Order By (Descending)</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">ORDER BY</span> age <span class="keyword">DESC</span>;</div>
+                    <div class="query-desc">Sorts results in descending order</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Order By Multiple Columns</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">ORDER BY</span> grade <span class="keyword">ASC</span>, age <span class="keyword">DESC</span>;</div>
+                    <div class="query-desc">Sorts by multiple columns</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Limit Results</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">LIMIT</span> <span class="number">10</span>;</div>
+                    <div class="query-desc">Returns only specified number of rows</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Limit with Offset</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">LIMIT</span> <span class="number">5</span> <span class="keyword">OFFSET</span> <span class="number">10</span>;</div>
+                    <div class="query-desc">Skips first 10 rows, returns next 5</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Alias Column Names</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name <span class="keyword">AS</span> student_name, age <span class="keyword">AS</span> student_age
+<span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Renames columns in result set</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONDITIONS & OPERATORS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Conditions & Operators
+                <span class="section-definition">Various operators to filter and compare data</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Comparison Operators</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> age >= <span class="number">18</span>;</div>
+                    <div class="query-desc">(=, !=, <, >, <=, >=)</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Logical AND</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade = <span class="string">'A'</span> <span class="keyword">AND</span> age > <span class="number">20</span>;</div>
+                    <div class="query-desc">Both conditions must be true</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Logical OR</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade = <span class="string">'A'</span> <span class="keyword">OR</span> grade = <span class="string">'B'</span>;</div>
+                    <div class="query-desc">Either condition must be true</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Logical NOT</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE NOT</span> grade = <span class="string">'A'</span>;</div>
+                    <div class="query-desc">Negates a condition</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">IN Operator</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade <span class="keyword">IN</span> (<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>);</div>
+                    <div class="query-desc">Matches any value in the list</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">NOT IN Operator</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade <span class="keyword">NOT IN</span> (<span class="string">'D'</span>, <span class="string">'F'</span>);</div>
+                    <div class="query-desc">Excludes values in the list</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">BETWEEN Operator</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> age <span class="keyword">BETWEEN</span> <span class="number">18</span> <span class="keyword">AND</span> <span class="number">22</span>;</div>
+                    <div class="query-desc">Range inclusive of endpoints</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">LIKE Operator</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">'A%'</span>;</div>
+                    <div class="query-desc">% for multiple chars, _ for single char</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">IS NULL</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade <span class="keyword">IS NULL</span>;</div>
+                    <div class="query-desc">Checks for NULL values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">IS NOT NULL</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade <span class="keyword">IS NOT NULL</span>;</div>
+                    <div class="query-desc">Excludes NULL values</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AGGREGATE FUNCTIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Aggregate Functions
+                <span class="section-definition">Functions that perform calculations on sets of values</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">COUNT</div>
+                    <div class="query-code"><span class="keyword">SELECT COUNT</span>(*) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Counts number of rows</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">COUNT DISTINCT</div>
+                    <div class="query-code"><span class="keyword">SELECT COUNT</span>(<span class="keyword">DISTINCT</span> grade) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Counts unique values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">SUM</div>
+                    <div class="query-code"><span class="keyword">SELECT SUM</span>(age) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Calculates sum of values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">AVG</div>
+                    <div class="query-code"><span class="keyword">SELECT AVG</span>(age) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Calculates average value</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">MIN</div>
+                    <div class="query-code"><span class="keyword">SELECT MIN</span>(age) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Finds minimum value</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">MAX</div>
+                    <div class="query-code"><span class="keyword">SELECT MAX</span>(age) <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Finds maximum value</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">GROUP_CONCAT</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> grade, <span class="keyword">GROUP_CONCAT</span>(name)
+<span class="keyword">FROM</span> students
+<span class="keyword">GROUP BY</span> grade;</div>
+                    <div class="query-desc">Concatenates values from multiple rows</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUP BY & HAVING -->
+        <div class="sql-section">
+            <div class="section-title">
+                GROUP BY & HAVING
+                <span class="section-definition">Grouping data and filtering groups</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">GROUP BY</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> grade, <span class="keyword">COUNT</span>(*) 
+<span class="keyword">FROM</span> students 
+<span class="keyword">GROUP BY</span> grade;</div>
+                    <div class="query-desc">Groups rows by column values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">HAVING Clause</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> grade, <span class="keyword">AVG</span>(age)
+<span class="keyword">FROM</span> students
+<span class="keyword">GROUP BY</span> grade
+<span class="keyword">HAVING AVG</span>(age) > <span class="number">20</span>;</div>
+                    <div class="query-desc">Filters groups after aggregation</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">GROUP BY Multiple Columns</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> department, grade, <span class="keyword">COUNT</span>(*)
+<span class="keyword">FROM</span> students
+<span class="keyword">GROUP BY</span> department, grade;</div>
+                    <div class="query-desc">Groups by multiple columns</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">ROLLUP</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> department, grade, <span class="keyword">COUNT</span>(*)
+<span class="keyword">FROM</span> students
+<span class="keyword">GROUP BY ROLLUP</span>(department, grade);</div>
+                    <div class="query-desc">Creates subtotals and grand total</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOINS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Joins
+                <span class="section-definition">Combining data from multiple tables based on relationships</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">INNER JOIN</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name, c.course_name
+<span class="keyword">FROM</span> students s
+<span class="keyword">INNER JOIN</span> courses c <span class="keyword">ON</span> s.course_id = c.id;</div>
+                    <div class="query-desc">Returns matching rows from both tables</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">LEFT JOIN</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name, c.course_name
+<span class="keyword">FROM</span> students s
+<span class="keyword">LEFT JOIN</span> courses c <span class="keyword">ON</span> s.course_id = c.id;</div>
+                    <div class="query-desc">Returns all rows from left table with matches from right</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">RIGHT JOIN</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name, c.course_name
+<span class="keyword">FROM</span> students s
+<span class="keyword">RIGHT JOIN</span> courses c <span class="keyword">ON</span> s.course_id = c.id;</div>
+                    <div class="query-desc">Returns all rows from right table with matches from left</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">FULL JOIN</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name, c.course_name
+<span class="keyword">FROM</span> students s
+<span class="keyword">FULL JOIN</span> courses c <span class="keyword">ON</span> s.course_id = c.id;</div>
+                    <div class="query-desc">Returns all rows when match in either table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Cross Join</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name, c.course_name
+<span class="keyword">FROM</span> students s
+<span class="keyword">CROSS JOIN</span> courses c;</div>
+                    <div class="query-desc">Cartesian product of both tables</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Self Join</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> a.name, b.name <span class="keyword">AS</span> buddy
+<span class="keyword">FROM</span> students a, students b
+<span class="keyword">WHERE</span> a.buddy_id = b.student_id;</div>
+                    <div class="query-desc">Joins table with itself</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Natural Join</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * 
+<span class="keyword">FROM</span> students
+<span class="keyword">NATURAL JOIN</span> courses;</div>
+                    <div class="query-desc">Joins tables on columns with same names</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SET OPERATIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Set Operations
+                <span class="section-definition">Combine results from multiple SELECT statements</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">UNION</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name <span class="keyword">FROM</span> current_students
+<span class="keyword">UNION</span>
+<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> former_students;</div>
+                    <div class="query-desc">Combines results, removes duplicates</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">UNION ALL</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name <span class="keyword">FROM</span> current_students
+<span class="keyword">UNION ALL</span>
+<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> former_students;</div>
+                    <div class="query-desc">Combines results, keeps duplicates</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">INTERSECT</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name <span class="keyword">FROM</span> students
+<span class="keyword">INTERSECT</span>
+<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> scholarship_recipients;</div>
+                    <div class="query-desc">Returns only common rows</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">EXCEPT (or MINUS)</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> name <span class="keyword">FROM</span> students
+<span class="keyword">EXCEPT</span>
+<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> scholarship_recipients;</div>
+                    <div class="query-desc">Returns rows only in first query</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBQUERIES -->
+        <div class="sql-section">
+            <div class="section-title">
+                Subqueries
+                <span class="section-definition">Nested queries within other SQL statements</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Subquery in WHERE</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> age > (
+    <span class="keyword">SELECT AVG</span>(age) <span class="keyword">FROM</span> students
+);</div>
+                    <div class="query-desc">Subquery returns single value</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Subquery with IN</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> course_id <span class="keyword">IN</span> (
+    <span class="keyword">SELECT</span> id <span class="keyword">FROM</span> courses
+    <span class="keyword">WHERE</span> department = <span class="string">'Computer'</span>
+);</div>
+                    <div class="query-desc">Subquery returns multiple values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">EXISTS Subquery</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students s
+<span class="keyword">WHERE EXISTS</span> (
+    <span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">FROM</span> courses c
+    <span class="keyword">WHERE</span> c.id = s.course_id
+);</div>
+                    <div class="query-desc">Checks if subquery returns any rows</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Subquery in FROM</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> dept, avg_age
+<span class="keyword">FROM</span> (
+    <span class="keyword">SELECT</span> department <span class="keyword">AS</span> dept, <span class="keyword">AVG</span>(age) <span class="keyword">AS</span> avg_age
+    <span class="keyword">FROM</span> students
+    <span class="keyword">GROUP BY</span> department
+) <span class="keyword">AS</span> dept_ages;</div>
+                    <div class="query-desc">Derived table in FROM clause</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Correlated Subquery</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> s.name
+<span class="keyword">FROM</span> students s
+<span class="keyword">WHERE</span> s.age > (
+    <span class="keyword">SELECT AVG</span>(age) 
+    <span class="keyword">FROM</span> students 
+    <span class="keyword">WHERE</span> department = s.department
+);</div>
+                    <div class="query-desc">Subquery references outer query</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONSTRAINTS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Constraints
+                <span class="section-definition">Rules enforced on data columns to maintain integrity</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Primary Key</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    student_id <span class="keyword">INT PRIMARY KEY</span>,
+    name <span class="keyword">VARCHAR</span>(<span class="number">50</span>)
+);</div>
+                    <div class="query-desc">Uniquely identifies each record</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Composite Primary Key</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> enrollments (
+    student_id <span class="keyword">INT</span>,
+    course_id <span class="keyword">INT</span>,
+    <span class="keyword">PRIMARY KEY</span> (student_id, course_id)
+);</div>
+                    <div class="query-desc">Combination of columns as primary key</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Foreign Key</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> enrollments (
+    enrollment_id <span class="keyword">INT PRIMARY KEY</span>,
+    student_id <span class="keyword">INT</span>,
+    course_id <span class="keyword">INT</span>,
+    <span class="keyword">FOREIGN KEY</span> (student_id) <span class="keyword">REFERENCES</span> students(student_id),
+    <span class="keyword">FOREIGN KEY</span> (course_id) <span class="keyword">REFERENCES</span> courses(course_id)
+);</div>
+                    <div class="query-desc">Maintains referential integrity</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Foreign Key with Actions</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> enrollments (
+    student_id <span class="keyword">INT</span>,
+    <span class="keyword">FOREIGN KEY</span> (student_id) 
+        <span class="keyword">REFERENCES</span> students(student_id)
+        <span class="keyword">ON DELETE CASCADE</span>
+        <span class="keyword">ON UPDATE SET NULL</span>
+);</div>
+                    <div class="query-desc">Defines behavior when referenced data changes</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">NOT NULL</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    student_id <span class="keyword">INT</span>,
+    name <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>
+);</div>
+                    <div class="query-desc">Column cannot have NULL values</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">UNIQUE</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    email <span class="keyword">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">UNIQUE</span>
+);</div>
+                    <div class="query-desc">All values must be unique</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">CHECK</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    age <span class="keyword">INT CHECK</span> (age >= <span class="number">18</span>)
+);</div>
+                    <div class="query-desc">Validates data against condition</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">DEFAULT</div>
+                    <div class="query-code"><span class="keyword">CREATE TABLE</span> students (
+    join_date <span class="keyword">DATE DEFAULT</span> <span class="keyword">CURRENT_DATE</span>
+);</div>
+                    <div class="query-desc">Sets default value for column</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Add Constraint to Existing Table</div>
+                    <div class="query-code"><span class="keyword">ALTER TABLE</span> students
+<span class="keyword">ADD CONSTRAINT</span> chk_age <span class="keyword">CHECK</span> (age >= <span class="number">18</span>);</div>
+                    <div class="query-desc">Adds constraint after table creation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEWS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Views
+                <span class="section-definition">Virtual tables based on result sets of SQL queries</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create View</div>
+                    <div class="query-code"><span class="keyword">CREATE VIEW</span> top_students <span class="keyword">AS</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students
+<span class="keyword">WHERE</span> grade = <span class="string">'A'</span>;</div>
+                    <div class="query-desc">Creates a virtual table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Create View with Columns</div>
+                    <div class="query-code"><span class="keyword">CREATE VIEW</span> student_grades (student_name, student_grade) <span class="keyword">AS</span>
+<span class="keyword">SELECT</span> name, grade <span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">View with custom column names</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Select from View</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> top_students;</div>
+                    <div class="query-desc">Queries view like a regular table</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Update View</div>
+                    <div class="query-code"><span class="keyword">UPDATE</span> top_students
+<span class="keyword">SET</span> grade = <span class="string">'A+'</span>
+<span class="keyword">WHERE</span> student_id = <span class="number">101</span>;</div>
+                    <div class="query-desc">Updates data through view (with limitations)</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop View</div>
+                    <div class="query-code"><span class="keyword">DROP VIEW</span> top_students;</div>
+                    <div class="query-desc">Removes a view</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Materialized View</div>
+                    <div class="query-code"><span class="keyword">CREATE MATERIALIZED VIEW</span> student_stats <span class="keyword">AS</span>
+<span class="keyword">SELECT</span> department, <span class="keyword">COUNT</span>(*), <span class="keyword">AVG</span>(age)
+<span class="keyword">FROM</span> students
+<span class="keyword">GROUP BY</span> department;</div>
+                    <div class="query-desc">Stores query results physically (not all DBMS support)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INDEXES -->
+        <div class="sql-section">
+            <div class="section-title">
+                Indexes
+                <span class="section-definition">Database objects that improve query performance</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Index</div>
+                    <div class="query-code"><span class="keyword">CREATE INDEX</span> idx_name
+<span class="keyword">ON</span> students (name);</div>
+                    <div class="query-desc">Improves query performance on name column</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Unique Index</div>
+                    <div class="query-code"><span class="keyword">CREATE UNIQUE INDEX</span> idx_email
+<span class="keyword">ON</span> students (email);</div>
+                    <div class="query-desc">Ensures unique values in column</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Composite Index</div>
+                    <div class="query-code"><span class="keyword">CREATE INDEX</span> idx_dept_grade
+<span class="keyword">ON</span> students (department, grade);</div>
+                    <div class="query-desc">Index on multiple columns</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Index</div>
+                    <div class="query-code"><span class="keyword">DROP INDEX</span> idx_name
+<span class="keyword">ON</span> students;</div>
+                    <div class="query-desc">Removes an index</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Clustered Index</div>
+                    <div class="query-code"><span class="keyword">CREATE CLUSTERED INDEX</span> idx_id
+<span class="keyword">ON</span> students (student_id);</div>
+                    <div class="query-desc">Determines physical order of data (SQL Server syntax)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORED PROCEDURES -->
+        <div class="sql-section">
+            <div class="section-title">
+                Stored Procedures
+                <span class="section-definition">Precompiled collection of SQL statements stored in database</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Procedure</div>
+                    <div class="query-code"><span class="keyword">CREATE PROCEDURE</span> get_student(IN sid <span class="keyword">INT</span>)
+<span class="keyword">BEGIN</span>
+    <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> student_id = sid;
+<span class="keyword">END</span>;</div>
+                    <div class="query-desc">Creates a stored procedure</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Call Procedure</div>
+                    <div class="query-code"><span class="keyword">CALL</span> get_student(<span class="number">101</span>);</div>
+                    <div class="query-desc">Executes a stored procedure</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Procedure with Parameters</div>
+                    <div class="query-code"><span class="keyword">CREATE PROCEDURE</span> add_student(
+    IN s_name <span class="keyword">VARCHAR</span>(<span class="number">50</span>), 
+    IN s_age <span class="keyword">INT</span>, 
+    OUT new_id <span class="keyword">INT</span>
+)
+<span class="keyword">BEGIN</span>
+    <span class="keyword">INSERT INTO</span> students (name, age) <span class="keyword">VALUES</span> (s_name, s_age);
+    <span class="keyword">SET</span> new_id = <span class="keyword">LAST_INSERT_ID</span>();
+<span class="keyword">END</span>;</div>
+                    <div class="query-desc">Procedure with input and output parameters</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Procedure</div>
+                    <div class="query-code"><span class="keyword">DROP PROCEDURE</span> get_student;</div>
+                    <div class="query-desc">Removes a stored procedure</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FUNCTIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Functions
+                <span class="section-definition">Reusable routines that return a value</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Function</div>
+                    <div class="query-code"><span class="keyword">CREATE FUNCTION</span> get_student_count(dept <span class="keyword">VARCHAR</span>(<span class="number">50</span>))
+<span class="keyword">RETURNS INT</span>
+<span class="keyword">BEGIN</span>
+    <span class="keyword">DECLARE</span> count <span class="keyword">INT</span>;
+    <span class="keyword">SELECT COUNT</span>(*) <span class="keyword">INTO</span> count <span class="keyword">FROM</span> students 
+    <span class="keyword">WHERE</span> department = dept;
+    <span class="keyword">RETURN</span> count;
+<span class="keyword">END</span>;</div>
+                    <div class="query-desc">Creates a user-defined function</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Call Function</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> get_student_count(<span class="string">'Computer'</span>);</div>
+                    <div class="query-desc">Uses the function in a query</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Function</div>
+                    <div class="query-code"><span class="keyword">DROP FUNCTION</span> get_student_count;</div>
+                    <div class="query-desc">Removes a function</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRIGGERS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Triggers
+                <span class="section-definition">Automatic actions invoked by database events</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Create Trigger</div>
+                    <div class="query-code"><span class="keyword">CREATE TRIGGER</span> update_timestamp
+<span class="keyword">BEFORE UPDATE ON</span> students
+<span class="keyword">FOR EACH ROW</span>
+<span class="keyword">BEGIN</span>
+    <span class="keyword">SET</span> NEW.updated_at = <span class="keyword">NOW</span>();
+<span class="keyword">END</span>;</div>
+                    <div class="query-desc">Automatically updates timestamp before update</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Drop Trigger</div>
+                    <div class="query-code"><span class="keyword">DROP TRIGGER</span> update_timestamp;</div>
+                    <div class="query-desc">Removes a trigger</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRANSACTIONS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Transactions
+                <span class="section-definition">Groups of operations that execute as a single unit</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Begin Transaction</div>
+                    <div class="query-code"><span class="keyword">BEGIN TRANSACTION</span>;</div>
+                    <div class="query-desc">Starts a transaction block</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Commit</div>
+                    <div class="query-code"><span class="keyword">COMMIT</span>;</div>
+                    <div class="query-desc">Saves changes permanently</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Rollback</div>
+                    <div class="query-code"><span class="keyword">ROLLBACK</span>;</div>
+                    <div class="query-desc">Undoes changes in transaction</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Savepoint</div>
+                    <div class="query-code"><span class="keyword">SAVEPOINT</span> point1;</div>
+                    <div class="query-desc">Creates a point to rollback to</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Rollback to Savepoint</div>
+                    <div class="query-code"><span class="keyword">ROLLBACK TO</span> point1;</div>
+                    <div class="query-desc">Rolls back to a specific savepoint</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Transaction Isolation Levels</div>
+                    <div class="query-code"><span class="keyword">SET TRANSACTION ISOLATION LEVEL</span> 
+    <span class="keyword">READ UNCOMMITTED</span> | <span class="keyword">READ COMMITTED</span> | 
+    <span class="keyword">REPEATABLE READ</span> | <span class="keyword">SERIALIZABLE</span>;</div>
+                    <div class="query-desc">Controls transaction visibility to other transactions</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVANCED CONCEPTS -->
+        <div class="sql-section">
+            <div class="section-title">
+                Advanced Concepts
+                <span class="section-definition">Specialized SQL features and techniques</span>
+            </div>
+            <div class="section-content">
+                <div class="query-item">
+                    <div class="query-name">Common Table Expressions (CTE)</div>
+                    <div class="query-code"><span class="keyword">WITH</span> dept_avg <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span> department, <span class="keyword">AVG</span>(age) <span class="keyword">AS</span> avg_age
+    <span class="keyword">FROM</span> students
+    <span class="keyword">GROUP BY</span> department
+)
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> dept_avg
+<span class="keyword">WHERE</span> avg_age > <span class="number">20</span>;</div>
+                    <div class="query-desc">Temporary result set for complex queries</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Recursive CTE</div>
+                    <div class="query-code"><span class="keyword">WITH RECURSIVE</span> hierarchy <span class="keyword">AS</span> (
+    <span class="comment">-- Base case</span>
+    <span class="keyword">SELECT</span> id, name, manager_id 
+    <span class="keyword">FROM</span> employees 
+    <span class="keyword">WHERE</span> id = <span class="number">101</span>
+    
+    <span class="keyword">UNION ALL</span>
+    
+    <span class="comment">-- Recursive case</span>
+    <span class="keyword">SELECT</span> e.id, e.name, e.manager_id
+    <span class="keyword">FROM</span> employees e
+    <span class="keyword">JOIN</span> hierarchy h <span class="keyword">ON</span> e.manager_id = h.id
+)
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> hierarchy;</div>
+                    <div class="query-desc">Handles hierarchical or tree-structured data</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Window Functions</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> 
+    name, 
+    grade,
+    <span class="keyword">RANK</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION BY</span> department <span class="keyword">ORDER BY</span> grade <span class="keyword">DESC</span>) <span class="keyword">AS</span> dept_rank
+<span class="keyword">FROM</span> students;</div>
+                    <div class="query-desc">Performs calculations across related rows</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Pivot Data</div>
+                    <div class="query-code"><span class="keyword">SELECT</span> *
+<span class="keyword">FROM</span> (
+    <span class="keyword">SELECT</span> department, grade, name
+    <span class="keyword">FROM</span> students
+) <span class="keyword">AS</span> source_table
+<span class="keyword">PIVOT</span> (
+    <span class="keyword">COUNT</span>(name) <span class="keyword">FOR</span> grade <span class="keyword">IN</span> ([A], [B], [C], [D], [F])
+) <span class="keyword">AS</span> pivot_table;</div>
+                    <div class="query-desc">Transforms rows into columns (syntax varies by DBMS)</div>
+                </div>
+
+                <div class="query-item">
+                    <div class="query-name">Dynamic SQL</div>
+                    <div class="query-code"><span class="keyword">DECLARE</span> @sql <span class="keyword">NVARCHAR</span>(<span class="number">MAX</span>);
+<span class="keyword">SET</span> @sql = <span class="string">'SELECT * FROM '</span> + @table_name;
+<span class="keyword">EXEC sp_executesql</span> @sql;</div>
+                    <div class="query-desc">Constructs and executes SQL dynamically (SQL Server syntax)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple script to highlight SQL keywords when clicked
+        document.querySelectorAll('.query-code').forEach(codeBlock => {
+            codeBlock.addEventListener('click', function() {
+                this.classList.toggle('highlighted');
+            });
+        });
+    </script>
+</body>
+</html>
