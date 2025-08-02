@@ -27,6 +27,7 @@ print(parrot[::-1])
 name = input("Enter Your name : ")
 age = int(input("Enter Your age : "))
 
+print("My age is " + str(age) + " years")
 print(f"{name} is {age} years old")
 print("{0} is {1} years old".format(name, age))
 
